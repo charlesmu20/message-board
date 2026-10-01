@@ -1,0 +1,25 @@
+import pymysql
+import os
+
+def get_db_connection():
+    return pymysql.connect(
+        host=os.getenv("DB_HOST"),
+        port=int(os.getenv("DB_PORT")),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME"),
+        cursorclass=pymysql.cursors.DictCursor,
+    )
+
+def init_db():
+    conn = get_db_connection()
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS posts (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                content TEXT,
+                image_url TEXT
+            )
+        """)
+    conn.commit()
+    conn.close()

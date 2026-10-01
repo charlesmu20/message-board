@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>圖文留言板</title>
+</head>
+<body>
+  <h1>發表一篇圖文</h1>
+  <form action="/post" method="POST" enctype="multipart/form-data">
+    文字內容：<input type="text" name="content">
+    圖片檔案：<input type="file" name="image">
+    <button type="submit">送出</button>
+  </form>
+
+  {% for post in posts %}
+    <hr>
+    <p>{{ post.content }}</p>
+    <img src="{{ post.image_url }}" width="150">
+  {% endfor %}
+
+</body>
+</html>
